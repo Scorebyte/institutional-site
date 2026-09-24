@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@scorbyte/shared-kernel": "^0.1.0",
+    "@scorbyte/shared-kernel": "github:Scorebyte/shared-kernel",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.14.0"

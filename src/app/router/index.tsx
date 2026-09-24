@@ -28,4 +28,6 @@ export const appRouter = createBrowserRouter([
       },
     ],
   },
-])
+], {
+  basename: import.meta.env.BASE_URL,
+})
