@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia da IA — ScoreByte</title>
+    <style>
+      :root {
+        color: #24151a;
+        background: #f7f3f1;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-synthesis: none;
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at 88% 2%, rgba(181, 34, 58, 0.12), transparent 24rem),
+          #f7f3f1;
+      }
+
+      button, a { font: inherit; }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.85rem clamp(1rem, 4vw, 3.5rem);
+        border-bottom: 1px solid #e5d9d6;
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(14px);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        min-width: 0;
+      }
+
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 2.4rem;
+        height: 2.4rem;
+        border-radius: 0.7rem;
+        background: #901a2d;
+        color: white;
+        font-weight: 900;
+      }
+
+      .brand strong, .brand span { display: block; }
+      .brand strong { font-size: 0.9rem; }
+      .brand span { color: #7e6e73; font-size: 0.7rem; }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+      }
+
+      .button {
+        min-height: 2.3rem;
+        padding: 0 0.9rem;
+        border: 1px solid #e1cdca;
+        border-radius: 0.65rem;
+        background: white;
+        color: #681020;
+        font-size: 0.75rem;
+        font-weight: 800;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .button:hover { border-color: #c78f99; background: #fff5f6; }
+      .button--primary { border-color: #901a2d; background: #901a2d; color: white; }
+      .button--primary:hover { background: #681020; }
+
+      .page {
+        display: grid;
+        grid-template-columns: minmax(13rem, 16rem) minmax(0, 52rem);
+        justify-content: center;
+        gap: 2rem;
+        padding: 2rem clamp(1rem, 4vw, 3.5rem) 5rem;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 5.2rem;
+        align-self: start;
+        max-height: calc(100vh - 7rem);
+        overflow: auto;
+      }
+
+      .sidebar h2 {
+        margin: 0 0 0.75rem;
+        color: #60708d;
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .toc { display: grid; gap: 0.22rem; }
+
+      .toc a {
+        padding: 0.45rem 0.65rem;
+        border-left: 2px solid transparent;
+        border-radius: 0 0.45rem 0.45rem 0;
+        color: #51627f;
+        font-size: 0.72rem;
+        font-weight: 650;
+        line-height: 1.3;
+        text-decoration: none;
+      }
+
+      .toc a:hover { border-left-color: #c82943; background: #fff; color: #681020; }
+
+      main { min-width: 0; }
+
+      .hero {
+        margin-bottom: 1rem;
+        padding: clamp(1.3rem, 4vw, 2.25rem);
+        overflow: hidden;
+        border: 1px solid #d9bfc3;
+        border-radius: 1.1rem;
+        background: linear-gradient(130deg, #4b0b17, #901a2d 70%, #d63850 145%);
+        color: white;
+        box-shadow: 0 1rem 2.8rem rgba(75, 11, 23, 0.13);
+      }
+
+      .hero .eyebrow {
+        margin: 0 0 0.6rem;
+        color: #ffc5ce;
+        font-size: 0.7rem;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .hero h1 { margin: 0; font-size: clamp(1.7rem, 5vw, 2.65rem); line-height: 1.05; }
+      .hero p { max-width: 42rem; margin: 0.8rem 0 0; color: #f1dce0; line-height: 1.55; }
+
+      .model-panel {
+        margin-bottom: 1rem;
+        padding: 1rem;
+        border: 1px solid #cce5d9;
+        border-radius: 0.9rem;
+        background: #f7fffb;
+      }
+
+      .model-panel__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .model-panel__title { display: flex; align-items: center; gap: 0.5rem; }
+      .model-panel__title h2 { margin: 0; font-size: 0.9rem; }
+
+      .status-dot {
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 50%;
+        background: #9ba8bb;
+      }
+
+      .status-dot.is-online { background: #20b978; box-shadow: 0 0 0 0.25rem rgba(32, 185, 120, 0.12); }
+      .model-state { color: #60708d; font-size: 0.68rem; font-weight: 700; }
+
+      .model-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.55rem;
+      }
+
+      .metric {
+        padding: 0.75rem;
+        border: 1px solid #dce8e2;
+        border-radius: 0.65rem;
+        background: white;
+      }
+
+      .metric strong, .metric span { display: block; }
+      .metric strong { overflow: hidden; font-size: 0.88rem; text-overflow: ellipsis; white-space: nowrap; }
+      .metric span { margin-top: 0.25rem; color: #65768d; font-size: 0.63rem; font-weight: 700; text-transform: uppercase; }
+
+      .document {
+        padding: clamp(1.25rem, 4vw, 2.5rem);
+        border: 1px solid #d9e1ed;
+        border-radius: 1rem;
+        background: white;
+        box-shadow: 0 0.7rem 2.2rem rgba(27, 50, 90, 0.06);
+      }
+
+      .document > h1:first-child { display: none; }
+      .document h2 { margin: 2.25rem 0 0.75rem; padding-top: 0.25rem; color: #681020; font-size: 1.35rem; }
+      .document h2:first-of-type { margin-top: 0; }
+      .document h3 { margin: 1.6rem 0 0.45rem; font-size: 1rem; }
+      .document p, .document li { color: #34445f; font-size: 0.9rem; line-height: 1.68; }
+      .document p { margin: 0.65rem 0; }
+      .document ul, .document ol { margin: 0.6rem 0 1rem; padding-left: 1.35rem; }
+      .document li + li { margin-top: 0.25rem; }
+
+      .document blockquote {
+        margin: 0.8rem 0 1.2rem;
+        padding: 1rem 1.15rem;
+        border-left: 4px solid #c82943;
+        border-radius: 0 0.7rem 0.7rem 0;
+        background: #fff8f1;
+        color: #5e3b18;
+        font-size: 1rem;
+        font-weight: 650;
+        line-height: 1.65;
+      }
+
+      .document code {
+        padding: 0.12rem 0.35rem;
+        border-radius: 0.3rem;
+        background: #edf2fa;
+        color: #16488e;
+        font-family: "Cascadia Code", Consolas, monospace;
+        font-size: 0.82em;
+      }
+
+      .document pre {
+        margin: 0.8rem 0 1.15rem;
+        padding: 1rem;
+        overflow: auto;
+        border-radius: 0.75rem;
+        background: #09182f;
+        color: #dce8ff;
+        line-height: 1.6;
+      }
+
+      .document pre code { padding: 0; background: transparent; color: inherit; font-size: 0.78rem; }
+
+      .error {
+        padding: 1rem;
+        border: 1px solid #efc1c1;
+        border-radius: 0.75rem;
+        background: #fff5f5;
+        color: #8e3030;
+      }
+
+      @media (max-width: 900px) {
+        .page { grid-template-columns: 1fr; }
+        .sidebar { display: none; }
+        .model-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+
+      @media (max-width: 620px) {
+        .topbar { align-items: flex-start; flex-direction: column; }
+        .actions { width: 100%; }
+        .button { flex: 1; }
+        .model-grid { grid-template-columns: 1fr; }
+      }
+
+      @media print {
+        body { background: white; }
+        .topbar, .sidebar { display: none; }
+        .page { display: block; padding: 0; }
+        .hero, .model-panel, .document { box-shadow: none; break-inside: avoid; }
+        .document { border: 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">IA</div>
+        <div>
+          <strong>ScoreByte</strong>
+          <span>Guia técnico e roteiro de apresentação</span>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="button" id="refresh-model" type="button">Atualizar modelo</button>
+        <button class="button" type="button" onclick="window.print()">Imprimir</button>
+        <a class="button button--primary" href="/analise">Abrir demonstração</a>
+      </div>
+    </header>
+
+    <div class="page">
+      <aside class="sidebar">
+        <h2>Nesta página</h2>
+        <nav class="toc" id="toc"></nav>
+      </aside>
+
+      <main>
+        <section class="hero">
+          <p class="eyebrow">Documentação de apoio</p>
+          <h1>Como explicar a IA da ScoreByte</h1>
+          <p>Arquitetura, treinamento, integração, explicabilidade, limitações e respostas para perguntas de banca.</p>
+        </section>
+
+        <section class="model-panel" aria-labelledby="model-title">
+          <div class="model-panel__header">
+            <div class="model-panel__title">
+              <span class="status-dot" id="model-dot"></span>
+              <h2 id="model-title">Modelo ativo</h2>
+            </div>
+            <span class="model-state" id="model-state">Consultando a API...</span>
+          </div>
+          <div class="model-grid" id="model-grid">
+            <div class="metric"><strong>—</strong><span>Versão</span></div>
+            <div class="metric"><strong>—</strong><span>Acurácia</span></div>
+            <div class="metric"><strong>—</strong><span>F1 macro</span></div>
+            <div class="metric"><strong>—</strong><span>Amostras</span></div>
+          </div>
+        </section>
+
+        <article class="document" id="document" aria-live="polite">
+          <p>Carregando o guia...</p>
+        </article>
+      </main>
+    </div>
+
+    <script>
+      const escapeHtml = (value) => value
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;')
+
+      const inline = (value) => escapeHtml(value)
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+
+      const slugify = (value) => value
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '')
+
+      function renderMarkdown(markdown) {
+        const output = []
+        const lines = markdown.replace(/\r\n/g, '\n').split('\n')
+        let code = []
+        let inCode = false
+        let paragraph = []
+        let listType = ''
+
+        const closeParagraph = () => {
+          if (paragraph.length) output.push(`<p>${inline(paragraph.join(' '))}</p>`)
+          paragraph = []
+        }
+        const closeList = () => {
+          if (listType) output.push(`</${listType}>`)
+          listType = ''
+        }
+
+        for (const rawLine of lines) {
+          const line = rawLine.trimEnd()
+          if (line.startsWith('```')) {
+            closeParagraph()
+            closeList()
+            if (inCode) {
+              output.push(`<pre><code>${escapeHtml(code.join('\n'))}</code></pre>`)
+              code = []
+              inCode = false
+            } else {
+              inCode = true
+            }
+            continue
+          }
+          if (inCode) {
+            code.push(rawLine)
+            continue
+          }
+          if (!line.trim()) {
+            closeParagraph()
+            closeList()
+            continue
+          }
+
+          const heading = /^(#{1,3})\s+(.+)$/.exec(line)
+          if (heading) {
+            closeParagraph()
+            closeList()
+            const level = heading[1].length
+            const text = heading[2]
+            output.push(`<h${level} id="${slugify(text)}">${inline(text)}</h${level}>`)
+            continue
+          }
+
+          if (line.startsWith('> ')) {
+            closeParagraph()
+            closeList()
+            output.push(`<blockquote>${inline(line.slice(2))}</blockquote>`)
+            continue
+          }
+
+          const unordered = /^-\s+(.+)$/.exec(line)
+          const ordered = /^\d+\.\s+(.+)$/.exec(line)
+          if (unordered || ordered) {
+            closeParagraph()
+            const nextType = ordered ? 'ol' : 'ul'
+            if (listType !== nextType) {
+              closeList()
+              listType = nextType
+              output.push(`<${listType}>`)
+            }
+            output.push(`<li>${inline((unordered || ordered)[1])}</li>`)
+            continue
+          }
+
+          closeList()
+          paragraph.push(line.trim())
+        }
+
+        closeParagraph()
+        closeList()
+        if (inCode) output.push(`<pre><code>${escapeHtml(code.join('\n'))}</code></pre>`)
+        return output.join('\n')
+      }
+
+      function buildTableOfContents() {
+        const toc = document.getElementById('toc')
+        toc.replaceChildren()
+        document.querySelectorAll('#document h2').forEach((heading) => {
+          const link = document.createElement('a')
+          link.href = `#${heading.id}`
+          link.textContent = heading.textContent
+          toc.appendChild(link)
+        })
+      }
+
+      async function loadGuide() {
+        const container = document.getElementById('document')
+        try {
+          const response = await fetch('./guia-ia.md', { cache: 'no-cache' })
+          if (!response.ok) throw new Error(`HTTP ${response.status}`)
+          container.innerHTML = renderMarkdown(await response.text())
+          buildTableOfContents()
+        } catch (error) {
+          container.innerHTML = `<div class="error">Não foi possível carregar guia-ia.md: ${escapeHtml(String(error))}</div>`
+        }
+      }
+
+      const percent = (value) => `${(Number(value) * 100).toLocaleString('pt-BR', { maximumFractionDigits: 2 })}%`
+
+      async function loadModel() {
+        const state = document.getElementById('model-state')
+        const dot = document.getElementById('model-dot')
+        const grid = document.getElementById('model-grid')
+        state.textContent = 'Consultando a API...'
+        dot.classList.remove('is-online')
+        try {
+          const response = await fetch('http://127.0.0.1:3333/api/v1/models/current', { cache: 'no-store' })
+          if (!response.ok) throw new Error(`HTTP ${response.status}`)
+          const model = await response.json()
+          const classifier = model.classifier
+          const metrics = [
+            [classifier.version, 'Versão'],
+            [percent(classifier.accuracy), 'Acurácia holdout'],
+            [percent(classifier.macroF1), 'F1 macro'],
+            [`${classifier.trainingSamples} treino · ${classifier.validationSamples} validação`, 'Amostras'],
+          ]
+          grid.replaceChildren(...metrics.map(([value, label]) => {
+            const metric = document.createElement('div')
+            metric.className = 'metric'
+            const strong = document.createElement('strong')
+            const span = document.createElement('span')
+            strong.textContent = value
+            span.textContent = label
+            metric.append(strong, span)
+            return metric
+          }))
+          dot.classList.add('is-online')
+          state.textContent = `${classifier.name} · ${classifier.algorithm}`
+        } catch {
+          state.textContent = 'API indisponível — consulte os dados estáticos abaixo'
+        }
+      }
+
+      document.getElementById('refresh-model').addEventListener('click', loadModel)
+      void loadGuide()
+      void loadModel()
+    </script>
+  </body>
+</html>
