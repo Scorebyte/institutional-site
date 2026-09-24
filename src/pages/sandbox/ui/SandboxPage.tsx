@@ -33,6 +33,7 @@ const classificationLabels: Record<Classification, string> = {
   PERSONAL_EXPENSE: 'Despesa pessoal',
   PERSONAL_TRANSFER: 'Transferência pessoal',
   TAX_PAYMENT: 'Imposto',
+  LOAN_RECEIVED: 'Empréstimo recebido',
   LOAN_PAYMENT: 'Parcela de crédito',
   SUPPLIER_PAYMENT: 'Fornecedor',
   REFUND: 'Estorno / devolução',
@@ -565,7 +566,7 @@ export function SandboxPage() {
 
                           <div className="sandbox-result-stats">
                             <div><span>Limite sugerido</span><strong>{formatCurrency(lastAnalysis.report.suggestedLimit)}</strong></div>
-                            <div><span>Fluxo de caixa líquido</span><strong>{formatCurrency(lastAnalysis.report.netCashFlow)}</strong></div>
+                            <div><span>Fluxo de caixa empresarial</span><strong>{formatCurrency(lastAnalysis.report.businessCashFlow)}</strong></div>
                             <div><span>Receita recorrente</span><strong>{formatPercent(lastAnalysis.report.recurringRevenueRate)}</strong></div>
                             <div><span>Participação do negócio</span><strong>{formatPercent(lastAnalysis.report.businessTransactionShare)}</strong></div>
                           </div>
@@ -598,11 +599,11 @@ export function SandboxPage() {
                             {lastAnalysis.report.monthlyCashFlow.map((month) => {
                               const maxAbs = Math.max(
                                 1,
-                                ...lastAnalysis.report.monthlyCashFlow.map((entry) => Math.abs(entry.netCashFlow)),
+                                ...lastAnalysis.report.monthlyCashFlow.map((entry) => Math.abs(entry.businessCashFlow)),
                               )
-                              const height = Math.max(4, (Math.abs(month.netCashFlow) / maxAbs) * 100)
+                              const height = Math.max(4, (Math.abs(month.businessCashFlow) / maxAbs) * 100)
                               return (
-                                <span key={month.month} title={formatCurrency(month.netCashFlow)}>
+                                <span key={month.month} title={formatCurrency(month.businessCashFlow)}>
                                   <i style={{ height: `${height}%` }} />
                                   <small>{month.month}</small>
                                 </span>
