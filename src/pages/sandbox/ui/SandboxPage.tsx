@@ -29,11 +29,13 @@ const scenarioOptions: Array<{ value: DemoScenario; label: string }> = [
 const classificationLabels: Record<Classification, string> = {
   BUSINESS_REVENUE: 'Receita empresarial',
   BUSINESS_EXPENSE: 'Despesa empresarial',
+  PERSONAL_REVENUE: 'Receita pessoal',
   PERSONAL_EXPENSE: 'Despesa pessoal',
   PERSONAL_TRANSFER: 'Transferência pessoal',
   TAX_PAYMENT: 'Imposto',
   LOAN_PAYMENT: 'Parcela de crédito',
   SUPPLIER_PAYMENT: 'Fornecedor',
+  REFUND: 'Estorno / devolução',
   UNKNOWN: 'Não identificada',
 }
 
