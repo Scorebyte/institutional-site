@@ -63,6 +63,55 @@ const audiences = [
   },
 ]
 
+const integrationFlow = [
+  { icon: 'building' as const, label: 'Sistema do cliente' },
+  { icon: 'api' as const, label: 'API ScoreByte' },
+  { icon: 'layers' as const, label: 'Normalização' },
+  { icon: 'brain' as const, label: 'Classificação + inteligência' },
+  { icon: 'chart' as const, label: 'Relatório estruturado' },
+]
+
+const dataChainFlow = [
+  { icon: 'wallet' as const, label: 'Banco / Conta' },
+  { icon: 'layers' as const, label: 'Open Finance' },
+  { icon: 'brain' as const, label: 'ScoreByte', brand: true },
+  { icon: 'spark' as const, label: 'Inteligência' },
+  { icon: 'building' as const, label: 'Banco / Fintech / Credora' },
+]
+
+const dataChainSubsteps = ['Normalizar', 'Classificar', 'Separar', 'Analisar']
+
+const securityPillars = [
+  {
+    label: 'Consentimento e Open Finance',
+    copy: 'Os dados financeiros são acessados dentro do fluxo de autorização e consentimento aplicável à integração utilizada.',
+  },
+  {
+    label: 'Credenciais protegidas',
+    copy: 'Credenciais de integração não ficam expostas no frontend nem gravadas diretamente no código.',
+  },
+  {
+    label: 'Multi-tenant',
+    copy: 'Instituições integradas possuem contextos e credenciais separados entre si.',
+  },
+  {
+    label: 'Webhooks autenticados',
+    copy: 'Eventos externos passam por mecanismos de autenticação e validação antes de entrar no pipeline.',
+  },
+  {
+    label: 'Modelo interno de dados',
+    copy: 'Dados externos passam por uma camada de adaptação antes de chegar ao domínio da ScoreByte.',
+  },
+  {
+    label: 'Controle de processamento',
+    copy: 'Idempotência, tratamento de erros e rastreabilidade aumentam a confiabilidade do pipeline.',
+  },
+  {
+    label: 'Proteção de dados',
+    copy: 'Princípios de minimização de exposição e controle de acesso às informações financeiras processadas.',
+  },
+]
+
 const chartBars = [68, 76, 73, 84, 79, 88]
 
 export function InstitutionalPage() {
@@ -364,6 +413,114 @@ export function InstitutionalPage() {
                 <p>O analista entende os pontos positivos, os sinais de atenção e o que sustenta a sugestão antes de decidir.</p>
               </div>
               <Link to="/sandbox">Ver análise completa <MarketingIcon name="arrow" size={17} /></Link>
+            </div>
+          </div>
+        </section>
+
+        <section className="institutional-section integration-section" id="integracao" aria-labelledby="integration-title">
+          <div className="institutional-container">
+            <div className="institutional-section-heading">
+              <p className="institutional-eyebrow">Open Finance · Plug &amp; Play · Segurança</p>
+              <h2 id="integration-title">O Open Finance entrega os dados. A ScoreByte transforma em inteligência.</h2>
+              <p>
+                Sua instituição conecta contas via integrações de Open Finance; a ScoreByte organiza,
+                classifica e analisa; você recebe inteligência financeira estruturada — sem construir
+                esse motor por dentro.
+              </p>
+            </div>
+
+            <div
+              className="flow-diagram"
+              role="img"
+              aria-label="Diagrama: uma conta bancária conectada via Open Finance alimenta a ScoreByte, que normaliza, classifica, separa movimentações pessoais e empresariais e analisa antes de devolver inteligência financeira estruturada para bancos, fintechs e credoras."
+            >
+              <div className="flow-diagram__orbit flow-diagram__orbit--one" aria-hidden="true" />
+              <div className="flow-diagram__orbit flow-diagram__orbit--two" aria-hidden="true" />
+
+              <ol className="flow-diagram__row" aria-hidden="true">
+                {dataChainFlow.map((node, index) => (
+                  <li key={node.label} className="flow-diagram__step">
+                    {index > 0 && (
+                      <span className="flow-diagram__arrow"><MarketingIcon name="arrow" size={15} /></span>
+                    )}
+                    <span className={`flow-diagram__node ${node.brand ? 'flow-diagram__node--brand' : ''}`}>
+                      <span className="flow-diagram__node-icon">
+                        <MarketingIcon name={node.icon} size={node.brand ? 19 : 18} />
+                        {node.brand && <i className="flow-diagram__dot" />}
+                      </span>
+                      {node.label}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+
+              <p className="flow-diagram__substeps-label" aria-hidden="true">Dentro da ScoreByte</p>
+              <ul className="flow-diagram__substeps" aria-hidden="true">
+                {dataChainSubsteps.map((step) => (
+                  <li key={step}>{step}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="integration-grid">
+              <article className="plugplay-card">
+                <div className="plugplay-card__head">
+                  <span className="plugplay-card__icon"><MarketingIcon name="api" size={22} /></span>
+                  <div>
+                    <p className="institutional-eyebrow">Plug &amp; Play</p>
+                    <h3>Conecte. Processe. Analise.</h3>
+                  </div>
+                </div>
+                <p>
+                  A ScoreByte funciona como uma camada de inteligência financeira acoplada à
+                  infraestrutura que sua instituição já tem, por API — sem reconstruir o motor de
+                  classificação e análise internamente.
+                </p>
+
+                <ol className="plugplay-flow" aria-label="Fluxo de integração com a API ScoreByte">
+                  {integrationFlow.map((step) => (
+                    <li key={step.label}>
+                      <span className="plugplay-flow__icon"><MarketingIcon name={step.icon} size={16} /></span>
+                      <span>{step.label}</span>
+                    </li>
+                  ))}
+                </ol>
+
+                <ul className="plugplay-tags">
+                  <li>API-first</li>
+                  <li>Arquitetura desacoplada</li>
+                  <li>Modelo de dados padronizado</li>
+                  <li>Processamento automatizado</li>
+                </ul>
+
+                <p className="plugplay-card__note">
+                  Dados de qualquer provedor de Open Finance passam por um adapter até o modelo
+                  interno da ScoreByte antes de entrar no motor — evitando dependência de um único
+                  fornecedor.
+                </p>
+              </article>
+
+              <article className="governance-card">
+                <div className="governance-card__seal">
+                  <MarketingIcon name="shield" size={28} />
+                  <div>
+                    <span>Segurança desde a arquitetura</span>
+                    <strong>Dados financeiros tratados como informação sensível</strong>
+                  </div>
+                </div>
+                <ul>
+                  {securityPillars.map((pillar) => (
+                    <li key={pillar.label}>
+                      <MarketingIcon name="check" size={17} />
+                      <span><strong>{pillar.label}</strong> — {pillar.copy}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="security-card__footnote">
+                  Arquitetura desenvolvida considerando princípios de proteção de dados e requisitos
+                  aplicáveis da LGPD.
+                </p>
+              </article>
             </div>
           </div>
         </section>

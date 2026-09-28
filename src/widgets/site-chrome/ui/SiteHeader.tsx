@@ -64,6 +64,7 @@ export function SiteHeader() {
         >
           <a href={`${homeAnchor}#solucao`} onClick={() => closeMenu(true)}>Solução</a>
           <a href={`${homeAnchor}#como-funciona`} onClick={() => closeMenu(true)}>Como funciona</a>
+          <a href={`${homeAnchor}#integracao`} onClick={() => closeMenu(true)}>Integração</a>
           <a href={`${homeAnchor}#para-quem`} onClick={() => closeMenu(true)}>Para quem</a>
           <a href={`${homeAnchor}#confianca`} onClick={() => closeMenu(true)}>Confiança</a>
           <Link className="institutional-nav__cta" to="/sandbox" onClick={() => closeMenu()}>
