@@ -47,6 +47,13 @@ const journey = [
 
 const audiences = [
   {
+    icon: 'wallet' as const,
+    label: 'Você é MEI?',
+    copy: 'Cadastre-se com seu e-mail, conecte seu banco pelo Open Finance e acompanhe sua conexão e sua análise de crédito. Sem burocracia.',
+    href: '/acesso',
+    linkLabel: 'Acessar o portal do MEI',
+  },
+  {
     icon: 'building' as const,
     label: 'Bancos e instituições financeiras',
     copy: 'Tenha uma visão mais completa do negócio do MEI e motivos claros para apoiar cada decisão.',
@@ -541,6 +548,11 @@ export function InstitutionalPage() {
                   <span><MarketingIcon name={audience.icon} size={25} /></span>
                   <h3>{audience.label}</h3>
                   <p>{audience.copy}</p>
+                  {'href' in audience && (
+                    <Link className="audience-card__link" to={audience.href}>
+                      {audience.linkLabel} <MarketingIcon name="arrow" size={15} />
+                    </Link>
+                  )}
                 </article>
               ))}
             </div>
