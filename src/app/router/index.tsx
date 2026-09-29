@@ -20,6 +20,20 @@ export const appRouter = createBrowserRouter([
         },
       },
       {
+        path: 'acesso',
+        lazy: async () => {
+          const module = await import('@/pages/access/ui/AccessPage')
+          return { Component: module.AccessPage }
+        },
+      },
+      {
+        path: 'mei',
+        lazy: async () => {
+          const module = await import('@/pages/mei/ui/MeiPortalPage')
+          return { Component: module.MeiPortalPage }
+        },
+      },
+      {
         path: '*',
         lazy: async () => {
           const module = await import('@/pages/not-found/ui/NotFoundPage')

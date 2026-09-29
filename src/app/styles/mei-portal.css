@@ -1,0 +1,122 @@
+/* Portal do MEI e página de escolha de acesso — reaproveita as variáveis e componentes de
+   .sandbox-page (botões, campos, alertas, badges) definidos em sandbox.css. */
+
+.sandbox-status-badge--success {
+  background: rgba(53, 209, 135, 0.16);
+  color: var(--sb-green-500);
+}
+
+.sandbox-status-badge--warning {
+  background: rgba(255, 178, 138, 0.22);
+  color: var(--sb-orange-ink);
+}
+
+.sandbox-status-badge--danger {
+  background: rgba(255, 84, 112, 0.16);
+  color: var(--sb-red-500);
+}
+
+.mei-connections-panel {
+  margin-top: 28px;
+  padding: 22px;
+  border: 1px solid var(--sb-border);
+  border-radius: 16px;
+  background: var(--sb-panel);
+}
+
+.mei-connections-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.mei-connections-panel__header h3 {
+  margin: 0 0 4px;
+}
+
+.mei-connections-panel__header p {
+  margin: 0;
+  color: var(--sb-ink-soft);
+  max-width: 46ch;
+}
+
+.mei-connections-panel__list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 22px 0 10px;
+}
+
+.mei-connections-panel__list-header h4 {
+  margin: 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--sb-ink-faint);
+}
+
+.mei-connections-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mei-connections-list > li {
+  padding: 14px 16px;
+  border: 1px solid var(--sb-border);
+  border-radius: 12px;
+  background: var(--sb-panel-soft);
+}
+
+.mei-connections-list__row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.mei-connections-list__row > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 220px;
+}
+
+.mei-connections-list__row > div:first-child span {
+  font-size: 0.76rem;
+  color: var(--sb-ink-faint);
+}
+
+.mei-connections-list__history {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  font-size: 0.78rem;
+  color: var(--sb-ink-soft);
+}
+
+.access-page__tabs {
+  margin-bottom: 22px;
+}
+
+.access-page__card {
+  max-width: 44rem;
+  padding: 28px;
+  border: 1px solid var(--sb-border);
+  border-radius: 16px;
+  background: var(--sb-panel);
+}
+
+.access-page__card h2 {
+  margin: 14px 0 8px;
+}
+
+.access-page__card p {
+  margin: 0 0 20px;
+  color: var(--sb-ink-soft);
+}

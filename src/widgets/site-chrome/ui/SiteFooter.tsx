@@ -17,6 +17,7 @@ export function SiteFooter() {
             <strong>Produto</strong>
             <a href={`${homeAnchor}#solucao`}>Solução</a>
             <a href={`${homeAnchor}#como-funciona`}>Como funciona</a>
+            <Link to="/mei">Portal do MEI</Link>
             <Link to="/sandbox">Sandbox</Link>
           </div>
           <div>

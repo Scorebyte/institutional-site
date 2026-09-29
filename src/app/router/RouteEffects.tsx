@@ -4,6 +4,8 @@ import { Outlet, useLocation } from 'react-router-dom'
 const pageTitles: Record<string, string> = {
   '/': 'Crédito MEI com inteligência e clareza',
   '/sandbox': 'Sandbox de demonstração',
+  '/acesso': 'Acessar minha conta',
+  '/mei': 'Portal do MEI',
 }
 
 export function RouteEffects() {
